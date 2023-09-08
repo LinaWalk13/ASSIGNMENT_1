@@ -72,9 +72,12 @@ Your job in this assignment is to double-check the data and make it analysis-rea
 If you have created a Rstudio project for this assignment, the working directory for this assignment (the default path for any function, procedure or command that works on files) is the project directory. If you have decided otherwise, first make sure that you set your working directory to the path of the current RMarkdown file. You can also use the following code chunk to install and/or load the packages you will need for the tasks below.
 
 ```{r setup}
-### Write your code here
+### Setting my working directory
+setwd("~/Documents/GitHub/ASSIGNMENT_1")
 
-
+### Loading packages
+library(dplyr)
+library(tidyverse)
 ```
 
 Load the following three data sets, after downloading them from dropbox and saving them in your working directory:
@@ -85,7 +88,9 @@ Load the following three data sets, after downloading them from dropbox and savi
 
 ```{r import_datasets, message = FALSE}
 ### Write your code here
-
+df  <- 
+df1 <-
+df2 <-
 
 ```
 
