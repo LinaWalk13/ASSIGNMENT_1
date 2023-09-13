@@ -77,6 +77,7 @@ If you have created a Rstudio project for this assignment, the working directory
 getwd()
 
 library(tidyverse)
+library(stringr)
 
 
 ```
@@ -120,6 +121,9 @@ Many different procedures can be used here, and unless you have to deal with gig
 ```{r rename_variables}
 ### Write your code here
 
+colnames(demo)[1:2] <- c("id", "visit")
+colnames(lu)[1:2] <- c("id", "visit")
+colnames(wd)[1:2] <- c("id", "visit")
 
 ```
 
@@ -131,6 +135,8 @@ Find a way to homogenize the way "visit" is reported amongst the different datas
 ```{r extract_digits}
 ### Write your code here
 
+lu$visit <- as.numeric(str_extract(lu$visit, "\\d+"))
+wd$visit <- as.numeric(str_extract(wd$visit, "\\d+"))
 
 ```
 
@@ -141,6 +147,10 @@ A similar task needs to be done regarding the value names of the Child.ID variab
 
 ```{r remove_points}
 ### Write your code here
+
+demo$id <- gsub("\\.", "", demo$id)
+lu$id <- gsub("\\.", "", lu$id)
+wd$id <- gsub("\\.", "", wd$id)
 
 
 ```
