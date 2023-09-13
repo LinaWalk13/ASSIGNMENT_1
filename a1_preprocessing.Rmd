@@ -72,12 +72,10 @@ Your job in this assignment is to double-check the data and make it analysis-rea
 If you have created a Rstudio project for this assignment, the working directory for this assignment (the default path for any function, procedure or command that works on files) is the project directory. If you have decided otherwise, first make sure that you set your working directory to the path of the current RMarkdown file. You can also use the following code chunk to install and/or load the packages you will need for the tasks below.
 
 ```{r setup}
-### Setting my working directory
-setwd("~/Documents/GitHub/ASSIGNMENT_1")
-
 ### Loading packages
 library(dplyr)
 library(tidyverse)
+library(stringr)
 ```
 
 Load the following three data sets, after downloading them from dropbox and saving them in your working directory:
@@ -88,9 +86,10 @@ Load the following three data sets, after downloading them from dropbox and savi
 
 ```{r import_datasets, message = FALSE}
 ### Write your code here
-df  <- 
-df1 <-
-df2 <-
+
+demo  <- read_csv("demo_train.csv")
+lu <- read_csv("LU_train.csv")
+wd <- read_csv("token_train.csv")
 
 ```
 
@@ -118,6 +117,20 @@ Many different procedures can be used here, and unless you have to deal with gig
 ```{r rename_variables}
 ### Write your code here
 
+## Looking at the variables in the different datasets
+names(demo)
+names(lu)
+names(wd)
+
+## Renaming the variables "ID"
+demo <- rename(demo, id = Child.ID)
+lu <- rename(lu, id = SUBJ)
+wd <- rename(wd, id = SUBJ)
+
+## Renaming the variable "visit"
+demo <- rename(demo, visit = Visit)
+lu <- rename(lu, visit = VISIT)
+wd <- rename(wd, visit = VISIT)
 
 ```
 
@@ -129,7 +142,9 @@ Find a way to homogenize the way "visit" is reported amongst the different datas
 ```{r extract_digits}
 ### Write your code here
 
-
+## Homogenizing visit and change the class to numeric
+lu$visit <- as.numeric(str_extract(lu$visit, "\\d+"))
+wd$visit <-as.numeric(str_extract(wd$visit, "\\d+"))
 ```
 
 A similar task needs to be done regarding the value names of the Child.ID variable in the demographic data set. The values of this variable that are not abbreviated do not end with "." (i.e. Adam), whereas they do in the other two data sets (i.e. Adam.). Key merges, that is, merging of data sets based on shared variables, can only be done is the latter have overlapping value names; if no identical value names can be found, nothing will be merged. In the present case, a simple way to ensure this consists in removing all points from the values of the corresponding variables. The package **stringr** can again be of help here, notably the function **str_replace_all()**.
@@ -140,6 +155,10 @@ A similar task needs to be done regarding the value names of the Child.ID variab
 ```{r remove_points}
 ### Write your code here
 
+## Removing points
+demo$id <- gsub("\\.", "", demo$id)
+lu$id <- gsub("\\.", "", lu$id)
+wd$id <- gsub("\\.", "", wd$id)
 
 ```
 
