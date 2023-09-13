@@ -73,7 +73,13 @@ If you have created a Rstudio project for this assignment, the working directory
 
 ```{r setup}
 ### Write your code here
+install.packages("tidyverse")
+install.packages("stringr")
 
+library(stringr)
+library(tidyverse)
+
+getwd()
 
 ```
 
@@ -86,6 +92,9 @@ Load the following three data sets, after downloading them from dropbox and savi
 ```{r import_datasets, message = FALSE}
 ### Write your code here
 
+demo <- read_csv("demo_train.csv")
+lu <- read_csv("LU_train.csv")
+wd <- read_csv("token_train.csv")
 
 ```
 
@@ -111,7 +120,11 @@ Many different procedures can be used here, and unless you have to deal with gig
 
 
 ```{r rename_variables}
-### Write your code here
+### renaming first two columns
+
+colnames(demo)[1:2] <- c("id", "visit")
+colnames(lu)[1:2] <- c("id", "visit")
+colnames(wd)[1:2] <- c("id", "visit")
 
 
 ```
@@ -122,9 +135,12 @@ Find a way to homogenize the way "visit" is reported amongst the different datas
 
 
 ```{r extract_digits}
-### Write your code here
+### homogenizing visit
 
-
+ demo$visit <- as.numeric(str_extract(demo$visit,  "\\d+"))
+ lu$visit <- as.numeric(str_extract(lu$visit,  "\\d+"))
+ wd$visit <- as.numeric(str_extract(wd$visit,  "\\d+"))
+ 
 ```
 
 A similar task needs to be done regarding the value names of the Child.ID variable in the demographic data set. The values of this variable that are not abbreviated do not end with "." (i.e. Adam), whereas they do in the other two data sets (i.e. Adam.). Key merges, that is, merging of data sets based on shared variables, can only be done is the latter have overlapping value names; if no identical value names can be found, nothing will be merged. In the present case, a simple way to ensure this consists in removing all points from the values of the corresponding variables. The package **stringr** can again be of help here, notably the function **str_replace_all()**.
@@ -134,8 +150,9 @@ A similar task needs to be done regarding the value names of the Child.ID variab
 
 ```{r remove_points}
 ### Write your code here
-
-
+demo$id <- gsub("\\.", "", demo$id)
+lu$id <- gsub("\\.", "", lu$id)
+wd$id <- gsub("\\.", "", wd$id)
 ```
 
 
