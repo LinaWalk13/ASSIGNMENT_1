@@ -73,7 +73,9 @@ If you have created a Rstudio project for this assignment, the working directory
 
 ```{r setup}
 ### Write your code here
-
+library("tidyverse")
+library("dplyr")
+library("stringr")
 
 ```
 
@@ -85,8 +87,9 @@ Load the following three data sets, after downloading them from dropbox and savi
 
 ```{r import_datasets, message = FALSE}
 ### Write your code here
-
-
+demo <- read.csv("demo_train.csv")
+lu <- read.csv("LU_train.csv")
+wd <- read.csv ("token_train.csv")
 ```
 
 Using various visualisation and aggregation procedures, explore these data sets and try to compare them to each other and draw parallel. You'll quickly notice that this is not an easy task. This is in part due to the fact that the different data sets were built by different researchers at different points in time. In particular, you'll find out that: 
@@ -112,7 +115,9 @@ Many different procedures can be used here, and unless you have to deal with gig
 
 ```{r rename_variables}
 ### Write your code here
-
+colnames(demo)[1:2] <- c("id", "visit")
+colnames(lu)[1:2] <- c("id", "visit")
+colnames(wd)[1:2] <- c("id", "visit")
 
 ```
 
@@ -123,7 +128,11 @@ Find a way to homogenize the way "visit" is reported amongst the different datas
 
 ```{r extract_digits}
 ### Write your code here
+wd$visit <- str_extract(wd$visit, "\\d+")
+lu$visit <- str_extract(lu$visit, "\\d+")
 
+wd$visit <- as.numeric(wd$visit)
+lu$visit <- as.numeric(lu$visit)
 
 ```
 
@@ -134,8 +143,8 @@ A similar task needs to be done regarding the value names of the Child.ID variab
 
 ```{r remove_points}
 ### Write your code here
-
-
+wd$id <- str_replace_all(wd$id, "\\.", "")
+lu$id <- str_replace_all(lu$id, "\\.", "")
 ```
 
 
