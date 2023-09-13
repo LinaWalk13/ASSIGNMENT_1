@@ -200,8 +200,29 @@ Feel free to rename the variables into something you think is more intuitive (i.
 
 ```{r rename_selected_variables}
 ### Write your code here
+demo <- demo %>%
+  select("id", 
+         "visit", 
+         "Diagnosis", 
+         "Ethnicity", 
+         "Gender", 
+         "Age", 
+         "ADOS",  
+         "MullenRaw", 
+         "ExpressiveLangRaw", 
+         "Socialization")
 
+lu <- lu %>%
+  select("id", 
+         "MOT_MLU",
+         "CHI_MLU")
 
+wd <- wd %>%
+  select("id", 
+         "types_MOT", 
+         "types_CHI", 
+         "tokens_MOT", 
+         "tokens_CHI")
 ```
 
 **5. Data merge**
@@ -216,7 +237,9 @@ It is important here to check if merging the data sets:
 ```{r merge_data}
 ### Write your code here
 
-
+## Merging the three data sets
+joint_df <- merge(demo, lu, by = "id") %>%
+  merge(wd, by = "id")
 ```
 
 **6. Data filtering**
@@ -233,8 +256,17 @@ A possible way to do so:
 ```{r add_first_visit_variables}
 ### Write your code here
 
+## Renaming and creating new dataset with id, visit and the 4 clinical variables
+demo_new <- filter(demo, visit == 1) %>%
+    select(id, 
+           visit, 
+           ADOS1 = ADOS, 
+           MullenRaw1 = MullenRaw, 
+           ExpressiveLangRaw1 = ExpressiveLangRaw, 
+           Socialization1 = Socialization)
 
-  
+## Merging new data set with the old
+joint_df <- merge(demo_new, joint_df, by = "id") ## i dont think this is correct hehehehe
 ```
 
 **7. Reverse Encoding**
