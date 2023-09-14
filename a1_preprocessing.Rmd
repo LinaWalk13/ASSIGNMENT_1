@@ -194,6 +194,12 @@ Feel free to rename the variables into something you think is more intuitive (i.
 ```{r rename_selected_variables}
 ### Write your code here
 
+demo <- select(demo, id, visit, Ethnicity, Diagnosis, Gender, Age, ADOS, MullenRaw, Socialization, ExpressiveLangRaw)
+
+lu <- select(lu, id, visit, MOT_MLU, CHI_MLU)
+
+wd <- select(wd, id, visit, types_MOT, types_CHI, tokens_MOT, tokens_CHI)
+
 
 ```
 
@@ -209,6 +215,7 @@ It is important here to check if merging the data sets:
 ```{r merge_data}
 ### Write your code here
 
+df <- bind_cols(demo, lu, wd)
 
 ```
 
